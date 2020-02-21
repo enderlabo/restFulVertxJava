@@ -7,6 +7,8 @@ import io.reactivex.Single;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.sql.ResultSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 public class CityServices {
 
     private final DBinit Db;
+    private static final Logger LOG = LoggerFactory.getLogger(CountryServices.class);
 
     @Inject
     CityServices(DBinit Db) { this.Db = Db; }
@@ -23,6 +26,10 @@ public Single<List<CityModel>> getCity() {
     return Db
         .db
         .rxQuery("SELECT * FROM CITY")
+            .map(x -> {
+                LOG.info(" After query ");
+                return x;
+            })
         .map(ResultSet::getRows)
         .map(
             rows ->

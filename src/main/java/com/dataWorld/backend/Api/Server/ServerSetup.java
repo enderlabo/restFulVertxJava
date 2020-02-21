@@ -20,15 +20,14 @@ public class ServerSetup {
     private final CityController cityController;
     private final CountryController countryController;
     private final CountryLanguage countryLanguage;
-    private final CountryServices countryServices;
 
 
     @Inject
-    public ServerSetup(CityController cityController, CountryController countryController, CountryLanguage countryLanguage, CountryServices countryServices) {
+    public ServerSetup(CityController cityController, CountryController countryController, CountryLanguage countryLanguage) {
         this.cityController = cityController;
         this.countryController = countryController;
         this.countryLanguage = countryLanguage;
-        this.countryServices = countryServices;
+
     }
 
     public void setup(){
@@ -66,19 +65,12 @@ public class ServerSetup {
 //                });
 
 
-        router.get("/api/countri").handler(ctx -> {
-
-            countryServices.getCountry();
-            ctx.next();
-        });
 
         //Controllers
         this.countryController.routes(router);
-//        this.cityController.routes(router);
-//        this.countryLanguage.routes(router);
-//        router.get("/*").handler(ctx -> {
-//           ctx.response().end(" /hola ");
-//        });
+        this.cityController.routes(router);
+        this.countryLanguage.routes(router);
+
 
 
         int port = 8081;

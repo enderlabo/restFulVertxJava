@@ -3,6 +3,8 @@ package com.dataWorld.backend.Api.Services;
 import com.dataWorld.backend.Api.Utils.DBinit;
 import com.dataWorld.backend.Api.Model.CountryLanguageModel;
 import io.reactivex.Single;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.sql.ResultSet;
 
 import javax.inject.Inject;
@@ -18,10 +20,16 @@ public class CountryLanguageServices {
     @Inject
     CountryLanguageServices(DBinit Db) { this.Db = Db; }
 
+    private static final Logger LOG = LoggerFactory.getLogger(CountryServices.class);
+
     public Single<List<CountryLanguageModel>> getCountryL() {
         return Db
                 .db
                 .rxQuery("SELECT * FROM COUNTRYLANGUAGE")
+                .map(x -> {
+                    LOG.info(" äfter query ");
+                    return x;
+                })
                 .map(ResultSet::getRows)
                 .map(
                         rows ->

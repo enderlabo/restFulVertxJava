@@ -66,10 +66,7 @@ public final class DaggerServerSetupComponent implements ServerSetupComponent {
     this.serverSetupProvider =
         DoubleCheck.provider(
             ServerSetup_Factory.create(
-                cityControllerProvider,
-                countryControllerProvider,
-                countryLanguageProvider,
-                countryServicesProvider));
+                cityControllerProvider, countryControllerProvider, countryLanguageProvider));
   }
 
   @Override

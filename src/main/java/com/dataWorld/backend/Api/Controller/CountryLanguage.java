@@ -23,6 +23,10 @@ public class CountryLanguage extends HandlerHttp {
 private void handlerGetCountryL(RoutingContext ctx) {
     //Take method from services.
     countryLanguage.getCountryL()
-            .subscribe( Object::notify );
+            .subscribe(r -> this.ok(ctx, r), e -> {
+                e.printStackTrace();
+                ctx.response().setStatusCode(401).end(e.getMessage());
+                System.out.println("Working!!");
+            });
     }
 }

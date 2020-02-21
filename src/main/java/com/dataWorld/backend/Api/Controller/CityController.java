@@ -32,8 +32,9 @@ public class CityController extends HandlerHttp {
         LOG.info("handlerGetCity match ");
 
         cityServices.getCity()
-
-                .subscribe( Object::notify );
-        ctx.response().end(" hola ");
+                .subscribe(r -> this.ok(ctx, r), e -> {
+                    e.printStackTrace();
+                    ctx.response().setStatusCode(401).end(e.getMessage());
+                });
     }
 }
